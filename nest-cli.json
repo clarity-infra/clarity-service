@@ -3,6 +3,27 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "webpack": true
+  },
+  "projects": {
+    "docker": {
+      "type": "library",
+      "root": "libs/docker",
+      "entryFile": "index",
+      "sourceRoot": "libs/docker/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/docker/tsconfig.lib.json"
+      }
+    },
+    "platform-manager": {
+      "type": "library",
+      "root": "libs/platform-manager",
+      "entryFile": "index",
+      "sourceRoot": "libs/platform-manager/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/platform-manager/tsconfig.lib.json"
+      }
+    }
   }
 }

@@ -1,0 +1,3 @@
+export enum DOCKER_TOKEN {
+    CONFIG = "DOCKER_TOKEN_FOR_DOCKER_CONFIG"
+}

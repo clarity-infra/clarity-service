@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "strict": true,
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
@@ -11,6 +12,20 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "@clarityops/docker": [
+        "libs/docker/src"
+      ],
+      "@clarityops/docker/*": [
+        "libs/docker/src/*"
+      ],
+      "@clarityops/platform-manager": [
+        "libs/platform-manager/src"
+      ],
+      "@clarityops/platform-manager/*": [
+        "libs/platform-manager/src/*"
+      ]
+    }
   }
 }
