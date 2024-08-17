@@ -1,7 +1,8 @@
-import { DynamicModule, FactoryProvider, Logger, Module, ModuleMetadata } from '@nestjs/common';
+import { ClassProvider, DynamicModule, FactoryProvider, Logger, Module, ModuleMetadata, Scope } from '@nestjs/common';
 import { PlatformManagerService } from './platform-manager.service';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_INTERCEPTOR, INQUIRER } from '@nestjs/core';
 import { PlatformManagerInterceptor } from './platform-manager.interceptor';
+import { PM_TOKEN } from './platform-manager.token';
 
 @Module({
   providers: [
@@ -16,18 +17,35 @@ import { PlatformManagerInterceptor } from './platform-manager.interceptor';
 export class PlatformManagerModule {
   private static setupForRoot(module: ModuleMetadata): DynamicModule {
     return {
+      ...module,
       module: PlatformManagerModule
     }
   }
 
-  static forRoot(logger: Omit<FactoryProvider<any>, 'provide'> & Pick<ModuleMetadata, 'imports'>): DynamicModule{
-    const { imports, ...provider } = options;
+  static forRoot(options?:
+    { logger?: Omit<FactoryProvider<any>, 'provide'> | Omit<ClassProvider<any>, 'provide'> } &
+    Pick<ModuleMetadata, 'imports'>
+  ): DynamicModule {
+    // still pass object
+    if (!options) options = {}
 
+    // default logger
+    if (!options?.logger) {
+      options.logger = {
+        inject: [INQUIRER],
+        scope: Scope.TRANSIENT,
+        useFactory(parentClass: object) {
+          return new Logger(parentClass?.constructor?.name)
+        },
+      }
+    }
+
+    // install for root
     return PlatformManagerModule.setupForRoot({
-      imports,
+      imports: options.imports,
       providers: [{
-        provide: Logger,
-        ...provider,
+        provide: PM_TOKEN.LOGGER,
+        ...options.logger,
       }]
     })
   }

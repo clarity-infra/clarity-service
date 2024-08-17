@@ -4,31 +4,35 @@ import {
     ExecutionContext,
     CallHandler,
     Logger,
-    Inject,
+    Inject
   } from '@nestjs/common';
   import { Observable } from 'rxjs';
 import { PlatformManagerService } from './platform-manager.service';
 import { ProcessPlatformManagerStore } from './platform-manager.interface';
+import { PM_TOKEN } from './platform-manager.token';
   
   @Injectable()
   export class PlatformManagerInterceptor implements NestInterceptor {
-    private logger = new Logger(PlatformManagerInterceptor.name);
+    constructor(
+      private pm: PlatformManagerService,
 
-    constructor(private pm: PlatformManagerService) {}
+      @Inject(PM_TOKEN.LOGGER)
+      private logger: Logger
+    ) { }
   
     intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-      this.logger.log('intercept new request');
+      this.logger.log('intercept request');
 
       const http = context.switchToHttp();
 
-      this.logger.log('setup state');
+      this.logger.log('setup store');
       const store: ProcessPlatformManagerStore = {
         request: http.getRequest(),
         response: http.getResponse()
       };
   
-      this.logger.log('set store on scoped function');
       return this.pm.initScopedStore(store, () => {
+        this.logger.log('store has been setup');
         const observable = next.handle();
         return observable;
       });

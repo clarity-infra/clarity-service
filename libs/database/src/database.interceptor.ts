@@ -21,7 +21,7 @@ export class DatabaseInterceptor implements NestInterceptor {
   ) { }
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-    this.logger.log('intercept new request')
+    this.logger.log('intercept request')
 
     this.logger.log('setup connection state');
     const store: DatabaseAsyncStorageStore = {
@@ -34,16 +34,10 @@ export class DatabaseInterceptor implements NestInterceptor {
       const observable = next.handle();
 
       observable.subscribe({
-        error: (err) => {
-          this.logger.log('error detected, releasing transaction connection');
-          //
-          this.logger.log('transaction connection released');
+        error: (err: Error) => {
           return err;
         },
         complete: () => {
-          this.logger.log('completed, releasing transaction connection');
-          //
-          this.logger.log('transaction connection released');
         },
       });
 

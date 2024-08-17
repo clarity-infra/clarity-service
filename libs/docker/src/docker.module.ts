@@ -10,8 +10,18 @@ export class DockerModule {
     module.providers.push({
       provide: Docker,
       inject:[DOCKER_TOKEN.CONFIG],
-      useFactory(config: Docker.DockerOptions) {
-        return new Docker(config);
+      async useFactory(config: Docker.DockerOptions) {
+        const docker = new Docker(config);
+
+        // === ONLY POC: should not like this ===
+        const version = await docker.version().catch((error: Error) => {
+          throw error
+        });
+
+        console.log(version)
+        // === POC DONE ===
+
+        return docker;
       },
     })
 
