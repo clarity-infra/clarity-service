@@ -24,7 +24,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+An open-source platform for designing, simulating, and managing transport networks. OpenTrack enables developers, engineers, and enthusiasts to collaboratively create and optimize routes, signaling systems, schedules, and real-time monitoring solutions. The project promotes innovation in transportation by encouraging community contributions and making advanced infrastructure solutions accessible to all.
 
 ## Installation
 
