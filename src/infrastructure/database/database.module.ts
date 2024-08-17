@@ -1,4 +1,9 @@
 import { Module } from '@nestjs/common';
+import { DatabaseModule as DatabaseModuleLib } from '@clarity/database';
 
-@Module({})
+@Module({
+  imports: [
+    DatabaseModuleLib.forRoot()
+  ]
+})
 export class DatabaseModule {}

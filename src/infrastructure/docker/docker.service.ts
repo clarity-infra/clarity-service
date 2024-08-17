@@ -1,4 +1,4 @@
-import { Docker } from '@clarityops/docker';
+import { Docker } from '@clarity/docker';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

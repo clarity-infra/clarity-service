@@ -31,9 +31,12 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "dockerode": "^4.0.2",
+    "mysql2": "^3.11.0",
     "node-gyp": "^10.2.0",
     "reflect-metadata": "^0.2.1",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "sqlite3": "^5.1.7",
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.3.1",
@@ -85,8 +88,9 @@
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
-      "^@clarityops/docker(|/.*)$": "<rootDir>/libs/docker/src/$1",
-      "^@clarityops/platform-manager(|/.*)$": "<rootDir>/libs/platform-manager/src/$1"
+      "^@clarity/docker(|/.*)$": "<rootDir>/libs/docker/src/$1",
+      "^@clarity/platform-manager(|/.*)$": "<rootDir>/libs/platform-manager/src/$1",
+      "^@clarity/database(|/.*)$": "<rootDir>/libs/database/src/$1"
     }
   }
 }
