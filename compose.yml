@@ -1,0 +1,43 @@
+version: '3'
+
+name: 'clarity-service'
+
+services:
+  core:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: dev
+    command: "/bin/sh -c 'bun i && bun start:dev'"
+    ports:
+      - '3111:3000'
+    volumes:
+      - .:/usr/src/app
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  mysql:
+    image: mysql:8.4
+    restart: always
+    volumes:
+      - ./tmp/mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: kb23ufg294vbojnsl
+    ports:
+      - '5506:3306'
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 5100:80
+    environment:
+      - PMA_HOST=clarity-service-mysql-1
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=kb23ufg294vbojnsl
+      - PMA_ARBITRARY=1
