@@ -15,18 +15,15 @@ export class SDKController {
     summary:
       'Typescript SDK',
   })
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'ready-to-dev typescript SDK file',
-  })
   async download(@Res() res: Response) {
-    const { fileContent, fileExtension, fileName } = await this.sdkService.make();
+    await this.sdkService.make();
+    const { fileContent, fileExtension, fileName } = this.sdkService.fileOrThrow
 
     res.set({
       'Content-Type': 'application/text',
       'Content-Disposition': `attachment; filename="${fileName}${fileExtension}"`,
     });
 
-    return res.send(fileContent);
+    return res.end(fileContent);
   }
 }

@@ -22,6 +22,9 @@ services:
       - ./tmp/mysql_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: kb23ufg294vbojnsl
+      MYSQL_DATABASE: clarity
+      MYSQL_USER: clarity
+      MYSQL_PASSWORD: clarity
     ports:
       - '5506:3306'
     healthcheck:

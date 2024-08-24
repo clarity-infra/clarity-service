@@ -8,23 +8,10 @@
 
 Clarify is a cloud platform designed to simplify the deployment, management, and scaling of applications. Tailored for developers, Clarify offers a streamlined, user-friendly interface that automates infrastructure concerns such as databases, networking, and scaling. It supports a wide range of programming languages and frameworks, making it a versatile tool for effortlessly building and maintaining applications. With Clarify, developers can focus more on coding and less on managing infrastructure, ensuring a smooth and efficient development process.
 
-## Installation
-
-```bash
-$ bun install
-```
-
 ## Running the app
 
 ```bash
-# development
-$ bun run start
-
-# watch mode
-$ bun run start:dev
-
-# production mode
-$ bun run start:prod
+$ docker compose up
 ```
 
 ## Test

@@ -7,7 +7,7 @@ import { ApiTags } from '@nestjs/swagger';
 export class DockerController {
     constructor(private dockerService: DockerService){}
 
-    @Get('/docker/version')
+    @Get('/version')
     getVersion() {
         return this.dockerService.version();
     }

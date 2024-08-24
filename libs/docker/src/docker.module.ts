@@ -1,4 +1,4 @@
-import { DynamicModule, FactoryProvider, Module, ModuleMetadata } from '@nestjs/common';
+import { DynamicModule, FactoryProvider, InternalServerErrorException, Module, ModuleMetadata } from '@nestjs/common';
 import { DOCKER_TOKEN } from "./docker.enum"
 import { Docker } from './docker.driver';
 
@@ -13,13 +13,11 @@ export class DockerModule {
       async useFactory(config: Docker.DockerOptions) {
         const docker = new Docker(config);
 
-        // === ONLY POC: should not like this ===
         const version = await docker.version().catch((error: Error) => {
-          throw error
+          throw new InternalServerErrorException(error, "can't connect to docker target")
         });
 
-        console.log(version)
-        // === POC DONE ===
+        console.log(version.Platform.Name)
 
         return docker;
       },
