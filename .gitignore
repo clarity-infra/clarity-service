@@ -400,3 +400,6 @@ dist
 .serverless/**/*.zip
 
 .turbo
+
+# Workspace settings
+tmp
