@@ -3,15 +3,15 @@ import { Node } from "../node.entity";
 import { Exclude, Type } from "class-transformer";
 import { PaginateDto } from "src/common/dto/paginate.dto";
 
-class NodePaginateDataReponseDto implements Omit<Node, 'config'> {
+class NodePaginateDataReponseDto implements Omit<Node, 'dockerConfig'> {
   id: number;
   name: string;
 
   /**
-   * dont expect to be returned
+   * dont expect to be returned 
    */
   @Exclude()
-  config?: DockerOptions;
+  dockerConfig?: DockerOptions;
 
   constructor(params: NodePaginateDataReponseDto) {
     this.id = params.id

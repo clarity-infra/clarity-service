@@ -1,18 +1,20 @@
 import { Docker } from "@clarity/docker";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity({ name: "nodes" })
 export class Node {
   @PrimaryGeneratedColumn()
-  id!: number;
+  id: number;
 
   @Column({ type: 'string', length: 50 })
-  name!: string;
+  name: string;
 
   @Column({ type: 'json' })
-  config!: Docker.DockerOptions;
+  dockerConfig: Docker.DockerOptions;
 
   constructor(initial: Node) {
-    Object.assign(this, initial);
+    this.id = initial.id;
+    this.name = initial.name;
+    this.dockerConfig = initial.dockerConfig;
   }
 }

@@ -10,14 +10,14 @@ import { SDKModule } from './sdk/sdk.module';
 import { APP_INTERCEPTOR, Reflector } from '@nestjs/core';
 
 @Module({
-    imports: [
-        PlatformManagerModule.forRoot({}),
-        DockerModule,
-        ConfigModule,
-        DatabaseModule,
-        LoggerModule,
-        OpenapiModule,
-        SDKModule
+  imports: [
+    PlatformManagerModule.forRoot({}),
+    DockerModule,
+    ConfigModule,
+    DatabaseModule,
+    LoggerModule,
+    OpenapiModule,
+    SDKModule
   ],
   providers: [
     {

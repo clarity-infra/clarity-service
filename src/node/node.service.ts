@@ -8,7 +8,7 @@ export class NodeService {
     const node = new Node({
       id: 1,
       name: "localhost",
-      config: {}
+      dockerConfig: {}
     })
 
     return [node]
@@ -22,12 +22,12 @@ export class NodeService {
     const general = new Node({
       id: 1,
       name: "localhost",
-      config: {
+      dockerConfig: {
         socketPath: "/var/run/docker.sock"
       }
     });
 
-    const docker = new Docker(general.config)
+    const docker = new Docker(general.dockerConfig)
 
     return {
       general: general,

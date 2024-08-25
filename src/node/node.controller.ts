@@ -1,4 +1,4 @@
-import { ClassSerializerInterceptor, Controller, Get, Param, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { NodePaginateResponseDto } from './node.dto/paginate-response.dto';
 import { NodeService } from './node.service';
