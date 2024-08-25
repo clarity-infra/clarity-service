@@ -9,7 +9,7 @@ export const openapiconfig = async () => {
       maintainer: {
         name: "Abdul Aziz Al Basyir",
         email: "abdulazizalbasyir119@gmail.com",
-        website: "clarity.albasyir.net/author"
+        website: "claritate.work/author"
       }
     }
 }

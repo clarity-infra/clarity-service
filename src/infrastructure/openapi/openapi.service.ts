@@ -32,7 +32,7 @@ export class OpenapiService {
         `${desc} <br/><br />SDK Available at : <ul><li>NPM Is not available now</li><li><a href='/sdk/download/typescript'>Download SDK File</a></li></ul>`,
       )
       .setVersion("latest")
-      .setContact('Abdul Aziz Al Basyir', "clarity.albasyir.net/author", "abdulazizalbasyir119@gmail.com")
+      .setContact('Abdul Aziz Al Basyir', "claritate.work/author", "abdulazizalbasyir119@gmail.com")
       .addBearerAuth()
       .build();
 
