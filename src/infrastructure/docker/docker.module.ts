@@ -3,7 +3,6 @@ import { DockerModule as DockerModuleLibrary  } from '@clarity/docker';
 import { DockerService } from './docker.service';
 import { DockerConfig, dockerconfig } from './docker.config';
 import { ConfigService, ConfigModule } from '@nestjs/config';
-import { DockerController } from './docker.controller';
 
 @Module({
     imports: [
@@ -20,7 +19,6 @@ import { DockerController } from './docker.controller';
         })
     ],
     providers: [DockerService],
-    exports: [DockerService],
-    controllers: [DockerController]
+    exports: [DockerService]
 })
 export class DockerModule {}

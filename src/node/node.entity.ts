@@ -4,7 +4,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 @Entity({ name: "nodes" })
 export class Node {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column({ type: 'string', length: 50 })
   name: string;
@@ -12,8 +12,7 @@ export class Node {
   @Column({ type: 'json' })
   dockerConfig: Docker.DockerOptions;
 
-  constructor(initial: Node) {
-    this.id = initial.id;
+  constructor(initial: Omit<Node, 'id'>) {
     this.name = initial.name;
     this.dockerConfig = initial.dockerConfig;
   }

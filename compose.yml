@@ -14,6 +14,7 @@ services:
     volumes:
       - .:/usr/src/app
       - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
 
   mysql:
     image: mysql:8.4

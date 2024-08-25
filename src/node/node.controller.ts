@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { NodePaginateResponseDto } from './node.dto/paginate-response.dto';
+import { NodePaginateResponseDto } from './dto/paginate-response.dto';
 import { NodeService } from './node.service';
 
 @Controller('node')

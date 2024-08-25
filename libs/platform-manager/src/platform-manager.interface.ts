@@ -1,4 +1,5 @@
-export interface ProcessPlatformManagerStore {
-    request: any
-    response: any
+export interface ProcessPlatformManagerStore{
+  request: any;
+  response: any;
+  user: any;
 }

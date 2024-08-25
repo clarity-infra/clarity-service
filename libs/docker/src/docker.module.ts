@@ -13,11 +13,9 @@ export class DockerModule {
       async useFactory(config: Docker.DockerOptions) {
         const docker = new Docker(config);
 
-        const version = await docker.version().catch((error: Error) => {
+        await docker.version().catch((error: Error) => {
           throw new InternalServerErrorException(error, "can't connect to docker target")
         });
-
-        console.log(version.Platform.Name)
 
         return docker;
       },

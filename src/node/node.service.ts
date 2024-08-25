@@ -4,33 +4,40 @@ import { Docker } from '@clarity/docker';
 
 @Injectable()
 export class NodeService {
-  async paginate() {
-    const node = new Node({
-      id: 1,
-      name: "localhost",
-      dockerConfig: {}
-    })
-
-    return [node]
+  async paginate(): Promise<Node[]> {
+    return [
+      {
+        id: 1,
+        name: "localhost",
+        dockerConfig: {
+          socketPath: "/var/run/docker.sock"
+        }
+      }
+    ]
   }
 
-  async getDetailById(nodeId: number) {
+  async getDetailById(nodeId: number): Promise<
+    {
+      general: Node,
+      docker: Docker.DockerVersion
+    }  
+  > {
     if (nodeId !== 1) {
       throw new NotFoundException("Node isn't found")
     }
 
-    const general = new Node({
+    const general: Node = {
       id: 1,
       name: "localhost",
       dockerConfig: {
         socketPath: "/var/run/docker.sock"
       }
-    });
+    };
 
     const docker = new Docker(general.dockerConfig)
 
     return {
-      general: general,
+      general,
       docker: await docker.version()
     }
   }

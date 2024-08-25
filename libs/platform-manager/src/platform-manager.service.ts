@@ -16,4 +16,6 @@ export class PlatformManagerService {
     get data() {
         return this.asyncStorage.getStore();
     }
+  
+  
 }

@@ -27,6 +27,7 @@
     "@nestjs/common": "^10.3.2",
     "@nestjs/config": "^3.2.3",
     "@nestjs/core": "^10.3.2",
+    "@nestjs/jwt": "^10.2.0",
     "@nestjs/platform-express": "^10.3.2",
     "@nestjs/swagger": "^7.4.0",
     "@scalar/nestjs-api-reference": "^0.3.145",
@@ -38,8 +39,8 @@
     "reflect-metadata": "^0.2.1",
     "rxjs": "^7.8.1",
     "sqlite3": "^5.1.7",
-    "typeorm": "^0.3.20",
-    "swagger-typescript-api": "13.0.6"
+    "swagger-typescript-api": "13.0.6",
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.3.1",

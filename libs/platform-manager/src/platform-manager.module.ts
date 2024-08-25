@@ -18,7 +18,8 @@ export class PlatformManagerModule {
   private static setupForRoot(module: ModuleMetadata): DynamicModule {
     return {
       ...module,
-      module: PlatformManagerModule
+      module: PlatformManagerModule,
+      global: true,
     }
   }
 

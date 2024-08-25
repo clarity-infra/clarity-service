@@ -1,6 +1,5 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { resolve } from 'path';
 import {
   FileInfo,
   GenerateApiOutput,
@@ -55,13 +54,10 @@ export class SDKService {
   async make(): Promise<FileInfo> {
     if (this.file) return this.file;
 
-    console.log(this.openApiService.spec);
-
+    // TODO: somehow this bug, it was working
     const output = await generateApi({
       name: this.fileName,
-      spec: this.openApiService.specOrThrow as any,
-      addReadonly: true,
-      output: resolve(process.cwd(), './dist/_out/sdk'),
+      spec: this.openApiService.specOrThrow as any, // TODO: need to be fixed some type are missed
       httpClientType: 'axios',
       defaultResponseAsSuccess: true,
       extractEnums: false,

@@ -21,18 +21,19 @@ import { PM_TOKEN } from './platform-manager.token';
     ) { }
   
     intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-      this.logger.log('intercept request');
-
       const http = context.switchToHttp();
+      if (!http) return next.handle();
 
-      this.logger.log('setup store');
+      this.logger.log('setup platform manager store');
+
       const store: ProcessPlatformManagerStore = {
         request: http.getRequest(),
-        response: http.getResponse()
+        response: http.getResponse(),
+        user: undefined,
       };
   
       return this.pm.initScopedStore(store, () => {
-        this.logger.log('store has been setup');
+        this.logger.log('store has been initiated');
         const observable = next.handle();
         return observable;
       });

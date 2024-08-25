@@ -1,4 +1,4 @@
-FROM node:22 AS base
+FROM node:20 AS base
 RUN npm i -g bun
 WORKDIR /usr/src/app
 
