@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://clarify.albasyir.net/" target="blank">
+  <a href="https://claritate.work/" target="blank">
     <img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Clarify Logo" />
   </a>
 </p>
