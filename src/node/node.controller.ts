@@ -11,11 +11,12 @@ import { CreateNodeRequestDto } from './dto/create-request.dto';
 export class NodeController {
   constructor(private nodeService: NodeService) {}
 
+  /**
+   * get listed of node(s) that managed by platform
+   * 
+   */
   @Get()
-  @ApiOperation({
-    summary: "Node Pagination",
-    description: "get listed of node(s) that managed by platform"
-  })
+  @ApiOperation({ summary: "Node Pagination" })
   async paginate(){
     const list = await this.nodeService.paginate();
 
@@ -25,20 +26,22 @@ export class NodeController {
   }
 
 
+  /**
+   * Information detail about node like docker version
+   * 
+   */
   @Get(":id")
-  @ApiOperation({
-    summary: "Node Detail",
-    description: "Information detail about node like docker version"
-  })
+  @ApiOperation({ summary: "Node Detail" })
   async detailOf(@Param('id', { transform: v => Number(v) }) id: number) {
     return this.nodeService.getDetailById(id);
   }
 
+  /**
+   * Register new node for multi-cluster or runner
+   * 
+   */
   @Post()
-  @ApiOperation({
-    summary: "Register new node",
-    description: "Register new node for multi-cluster or runner"
-  })
+  @ApiOperation({ summary: "Node Registration" })
   async register(@Body() body: CreateNodeRequestDto) {
     throw new NotImplementedException()
   }

@@ -9,11 +9,12 @@ import { Public } from './auth.decorator';
 export class AuthController {
   constructor(private authService: AuthService) { }
 
+  /**
+   * common API to know who you are with identifier and password, 
+   * **identifier is same exactly as username**
+   */
+  @ApiOperation({ summary: "Log-in" })
   @Post('login')
-  @ApiOperation({
-    summary: "Login",
-    description: "common API to know who you are with identifier and password, **identifier is same exactly as username**"
-  })
   @Public()
   signIn(@Body() signInDto: AuthLoginRequestDto) {
     return this.authService.signIn(signInDto.identifier, signInDto.password);
