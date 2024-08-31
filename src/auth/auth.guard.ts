@@ -10,8 +10,13 @@ import { IsPublic, Permission } from './auth.reflector';
 
 type PayloadType = Awaited<ReturnType<AuthService['getSafeJWTPayload']>>;
 
+/**
+ * Application guard
+ * 
+ * to protect user that have no token or decide permission is forbidden or not
+ */
 @Injectable()
-export class JWTGuard implements CanActivate {
+export class AuthenticationGuard implements CanActivate {
   constructor(
     private authService: AuthService,
     private reflector: Reflector,
@@ -39,12 +44,20 @@ export class JWTGuard implements CanActivate {
     return true;
   }
 
+  /**
+   * logic of how check public request
+   * 
+   */
   private async checkIsPublicRequest(ctx: ExecutionContext): Promise<boolean> {
     const is_public_allowed = this.reflector.get(IsPublic, ctx.getHandler());
 
     return is_public_allowed;
   }
 
+  /**
+   * logic of how get JWT token
+   * 
+   */
   private async getJWT(): Promise<string> {
     const token = await this.authService.getJWT().catch((error: Error) => {
       throw new UnauthorizedException(error.message);
@@ -53,16 +66,28 @@ export class JWTGuard implements CanActivate {
     return token;
   }
 
+  /**
+   * logic of how verify and get payload
+   * 
+   */
   private async getSafePayload(jwt: string): Promise<PayloadType> {
     return this.authService.getSafeJWTPayload(jwt).catch((error: Error) => {
       throw new UnauthorizedException(error.message);
     });
   }
 
+  /**
+   * logic of how set user to session
+   * 
+   */
   private async setUserSessionFromPayload(payload: PayloadType) {
     await this.authService.setUserSession(payload)
   }
 
+  /**
+   * logic of how check permission
+   * 
+   */
   private async checkPermission(ctx: ExecutionContext) {
     // TODO: implement real permission checker
     const _ = this.reflector.get(Permission, ctx.getHandler());

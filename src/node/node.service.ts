@@ -9,6 +9,9 @@ export class NodeService {
       {
         id: 1,
         name: "localhost",
+        sshConfig: {
+          host: '127.0.0.1',
+        },
         dockerConfig: {
           socketPath: "/var/run/docker.sock"
         }
@@ -29,6 +32,9 @@ export class NodeService {
     const general: Node = {
       id: 1,
       name: "localhost",
+      sshConfig: {
+        host: '127.0.0.1',
+      },
       dockerConfig: {
         socketPath: "/var/run/docker.sock"
       }
