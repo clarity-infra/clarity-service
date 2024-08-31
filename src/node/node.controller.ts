@@ -1,8 +1,9 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, NotImplementedException, Param, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { NodePaginateResponseDto } from './dto/paginate-response.dto';
 import { NodeService } from './node.service';
 import { Authenticated } from 'src/auth/auth.decorator';
+import { CreateNodeRequestDto } from './dto/create-request.dto';
 
 @Controller('node')
 @ApiTags("Node")
@@ -31,5 +32,14 @@ export class NodeController {
   })
   async detailOf(@Param('id', { transform: v => Number(v) }) id: number) {
     return this.nodeService.getDetailById(id);
+  }
+
+  @Post()
+  @ApiOperation({
+    summary: "Register new node",
+    description: "Register new node for multi-cluster or runner"
+  })
+  async register(@Body() body: CreateNodeRequestDto) {
+    throw new NotImplementedException()
   }
 }
