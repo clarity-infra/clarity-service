@@ -1,21 +1,49 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { AsyncLocalStorage } from 'async_hooks';
-import { ProcessPlatformManagerStore } from './platform-manager.interface';
+import { PlatformManagerState } from './platform-manager.state';
 
 @Injectable()
 export class PlatformManagerService {
-    private asyncStorage = new AsyncLocalStorage<ProcessPlatformManagerStore>();
+  private asyncStorage = new AsyncLocalStorage<PlatformManagerState>();
 
-    initScopedStore<T extends () => unknown>(
-        initialData: ProcessPlatformManagerStore,
-        functionAsync: T,
-    ) {
-        return this.asyncStorage.run(initialData, functionAsync) as ReturnType<T>;
-    }
+  /**
+   * Storage scope to let platform manager understand which state to be keep
+   * 
+   */
+  initPlatformScope<T extends () => unknown>(
+    initialData: PlatformManagerState,
+    functionAsync: T,
+  ) {
+    return this.asyncStorage.run(initialData, functionAsync) as ReturnType<T>;
+  }
 
-    get data() {
-        return this.asyncStorage.getStore();
-    }
-  
-  
+  get context() {
+    const context = this.asyncStorage.getStore();  
+
+    if (!context)
+      throw new InternalServerErrorException("platform manager context is not found, is that request based?")
+
+    return context;
+  }
+
+  /**
+   * shortcut of `context.request`
+   */
+  get request() {
+    return this.context.reqeust
+  }
+
+  /**
+   * shortcut of `context.response`
+   */
+  get response() {
+    return this.context.response
+  }
+
+  /**
+   * shortcut of `context.state`
+   */
+  get state() {
+    return this.context.state
+  }
 }

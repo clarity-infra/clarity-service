@@ -10,7 +10,19 @@ export class UserService {
 
     return {
       id: 1,
-      identifier: identifier,
+      identifier: "admin",
+      password: "qwerty12345"
+    }
+  }
+
+  async findUserById(id: number): Promise<User> {
+    if (id !== 1) {
+      throw new NotFoundException("user isn't found");
+    }
+
+    return {
+      id: 1,
+      identifier: "admin",
       password: "qwerty12345"
     }
   }

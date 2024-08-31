@@ -1,23 +1,23 @@
-import { ClassSerializerInterceptor, INestApplication, InternalServerErrorException, Module, OnModuleInit } from '@nestjs/common';
+import { ClassSerializerInterceptor, INestApplication, Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule } from './config/config.module';
 import { DockerModule } from './docker/docker.module';
 import { DatabaseModule } from './database/database.module';
 import { LoggerModule } from './logger/logger.module';
-import { PlatformManagerModule } from '@clarity/platform-manager';
 import { OpenapiModule } from './openapi/openapi.module';
 import { OpenapiService } from './openapi/openapi.service';
 import { SDKModule } from './sdk/sdk.module';
 import { APP_INTERCEPTOR, Reflector } from '@nestjs/core';
+import { PlatformModule } from './platform/platform.module';
 
 @Module({
   imports: [
-    PlatformManagerModule.forRoot({}),
+    PlatformModule,
     DockerModule,
     ConfigModule,
     DatabaseModule,
     LoggerModule,
     OpenapiModule,
-    SDKModule
+    SDKModule,
   ],
   providers: [
     {

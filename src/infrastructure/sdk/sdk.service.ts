@@ -60,13 +60,16 @@ export class SDKService {
       spec: this.openApiService.specOrThrow as any, // TODO: need to be fixed some type are missed
       httpClientType: 'axios',
       defaultResponseAsSuccess: true,
-      extractEnums: false,
       defaultResponseType: 'void',
-      extractResponseError: true,
-      extractRequestBody: true,
-      extractResponseBody: true,
-      extractRequestParams: true,
       generateResponses: true,
+
+      // TODO: extract is not good to go now, since when there's double Enum / Params it will be like "EnumStatus, E"
+      extractEnums: false,
+      extractResponseError: false,
+      extractRequestBody: false,
+      extractResponseBody: false,
+      extractRequestParams: false,
+      
     });
 
     this._output = output;

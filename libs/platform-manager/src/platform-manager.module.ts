@@ -1,30 +1,27 @@
-import { ClassProvider, DynamicModule, FactoryProvider, Logger, Module, ModuleMetadata, Scope } from '@nestjs/common';
+import { ClassProvider, DynamicModule, FactoryProvider, Inject, Logger, MiddlewareConsumer, Module, ModuleMetadata, NestModule, Scope } from '@nestjs/common';
 import { PlatformManagerService } from './platform-manager.service';
-import { APP_INTERCEPTOR, INQUIRER } from '@nestjs/core';
-import { PlatformManagerInterceptor } from './platform-manager.interceptor';
+import { INQUIRER } from '@nestjs/core';
 import { PM_TOKEN } from './platform-manager.token';
+import { PlatformManagerState } from './platform-manager.state';
 
 @Module({
   providers: [
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: PlatformManagerInterceptor
-    },
     PlatformManagerService
   ],
   exports: [PlatformManagerService],
 })
-export class PlatformManagerModule {
+export class PlatformManagerModule implements NestModule {
   private static setupForRoot(module: ModuleMetadata): DynamicModule {
     return {
       ...module,
       module: PlatformManagerModule,
-      global: true,
     }
   }
 
   static forRoot(options?:
-    { logger?: Omit<FactoryProvider<any>, 'provide'> | Omit<ClassProvider<any>, 'provide'> } &
+    {
+      logger?: Omit<FactoryProvider<any>, 'provide'> | Omit<ClassProvider<any>, 'provide'>
+    } &
     Pick<ModuleMetadata, 'imports'>
   ): DynamicModule {
     // still pass object
@@ -49,5 +46,28 @@ export class PlatformManagerModule {
         ...options.logger,
       }]
     })
+  }
+
+  constructor(
+    private pm: PlatformManagerService,
+
+    @Inject(PM_TOKEN.LOGGER)
+    private logger: Logger
+  ) { }
+
+  configure(consumer: MiddlewareConsumer) {
+    // NOTE: only support express and fastify with a bit adjustment on it
+    //
+    //
+    consumer
+      .apply((req: any, res: any, next: any) => {
+        const store = new PlatformManagerState({
+          request: req,
+          response: res
+        });
+
+        return this.pm.initPlatformScope(store, () => next());
+      })
+      .forRoutes('*');
   }
 }

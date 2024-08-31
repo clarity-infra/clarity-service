@@ -2,16 +2,18 @@ import { Controller, Get, Param } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { NodePaginateResponseDto } from './dto/paginate-response.dto';
 import { NodeService } from './node.service';
+import { Authenticated } from 'src/auth/auth.decorator';
 
 @Controller('node')
 @ApiTags("Node")
+@Authenticated()
 export class NodeController {
   constructor(private nodeService: NodeService) {}
 
   @Get()
   @ApiOperation({
     summary: "Node Pagination",
-    description: "get listed of node(s) that managed by clarity platform"
+    description: "get listed of node(s) that managed by platform"
   })
   async paginate(){
     const list = await this.nodeService.paginate();

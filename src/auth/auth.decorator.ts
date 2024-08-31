@@ -1,10 +1,17 @@
-import { applyDecorators, SetMetadata, UseGuards } from "@nestjs/common";
-import { JWTGuard } from "./auth.guard";
-import { PermissionGuard } from "./permission/permission.guard";
+import { applyDecorators } from "@nestjs/common";
+import { ApiBearerAuth } from "@nestjs/swagger";
+import { IsPublic } from "./auth.reflector";
 
-export function Role(...permissions: string[]) {
+export function Authenticated()
+{
   return applyDecorators(
-    SetMetadata('permissions', permissions),
-    UseGuards(JWTGuard, PermissionGuard),
+    IsPublic(false),
+    ApiBearerAuth()
   );
+}
+
+export function Public() {
+  return applyDecorators(
+    IsPublic(true),
+  )
 }
