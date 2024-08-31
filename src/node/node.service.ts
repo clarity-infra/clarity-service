@@ -42,6 +42,10 @@ export class NodeService {
 
     const docker = new Docker(general.dockerConfig)
 
+    // TODO
+    // curl from node to get detail IP include location
+    // curl http://ip-api.com/json
+
     return {
       general,
       docker: await docker.version()

@@ -6,13 +6,12 @@ export class User {
   id!: number;
 
   @Column({ type: 'string', length: 20 })
-  identifier: string;
+  identifier!: string;
 
   @Column({ type: "string", length: 50 })
-  password: string;
+  password!: string;
 
   constructor(initial: Omit<User, 'id'>) {
-    this.identifier = initial.identifier;
-    this.password = initial.password;
+    Object.assign(this, initial)
   }
 }
