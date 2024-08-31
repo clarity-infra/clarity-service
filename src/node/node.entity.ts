@@ -1,7 +1,7 @@
 import { Docker } from "@clarity/docker";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity({ name: "nodes" })
+@Entity()
 export class Node {
   @PrimaryGeneratedColumn()
   id!: number;

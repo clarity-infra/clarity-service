@@ -1,16 +1,10 @@
 import { ConfigModule } from "@nestjs/config";
 import { ValidMysqlDatabaseConfig } from "./dto/mysql-database-config.dto";
-
-type MysqlDatabaseConfig = {
-  type: "mysql",
-  host: string,
-  username: string,
-  password: string,
-  database: string
-}
+import { DataSourceOptions } from "typeorm";
+import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 
 export type DatabaseConfig = {
-  datasource: MysqlDatabaseConfig
+  datasource: DataSourceOptions
 };
 
 export const databaseconfig = async (): Promise<DatabaseConfig> => {
@@ -28,7 +22,8 @@ export const databaseconfig = async (): Promise<DatabaseConfig> => {
         host: config.DB_HOST,
         username: config.DB_USER,
         password: config.DB_PASS,
-        database: config.DB_NAME
+        database: config.DB_NAME,
+        namingStrategy: new SnakeNamingStrategy()
       }
     }
   }
