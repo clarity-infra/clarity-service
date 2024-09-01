@@ -1,6 +1,6 @@
 version: '3'
 
-name: 'clarity-service'
+name: 'clareza-service'
 
 services:
   core:
@@ -8,7 +8,7 @@ services:
       context: .
       dockerfile: docker/Dockerfile
       target: dev
-    command: "/bin/sh -c 'bun i && bun start:dev'"
+    command: "/bin/sh -c '/usr/sbin/sshd && bun i && bun start:dev'"
     ports:
       - '3111:3000'
     volumes:
@@ -22,10 +22,10 @@ services:
     volumes:
       - ./tmp/mysql_data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: kb23ufg294vbojnsl
-      MYSQL_DATABASE: clarity
-      MYSQL_USER: clarity
-      MYSQL_PASSWORD: clarity
+      MYSQL_ROOT_PASSWORD: clareza
+      MYSQL_DATABASE: clareza
+      MYSQL_USER: clareza
+      MYSQL_PASSWORD: clareza
     ports:
       - '5506:3306'
     healthcheck:
@@ -40,8 +40,8 @@ services:
     ports:
       - 5100:80
     environment:
-      - PMA_HOST=clarity-service-mysql-1
+      - PMA_HOST=clareza-service-mysql-1
       - PMA_PORT=3306
       - PMA_USER=root
-      - PMA_PASSWORD=kb23ufg294vbojnsl
+      - PMA_PASSWORD=clareza
       - PMA_ARBITRARY=1

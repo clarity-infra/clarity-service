@@ -4,24 +4,43 @@ import { Exclude, Type } from "class-transformer";
 import { PaginateDto } from "src/common/dto/paginate.dto";
 import { ApiHideProperty } from "@nestjs/swagger";
 
-class NodePaginateListReponseDto implements Omit<Node, 'dockerConfig'> {
+class NodePaginateListReponseDto implements Node {
+  /**
+   * Id of Node
+   */
   id: number;
+
+  /**
+   * Name of Node
+   */
   name: string;
 
   /**
-   * dont expect to be returned 
+   * this field is not available on this object
+   * 
    */
   @Exclude()
   @ApiHideProperty()
-  dockerConfig?: DockerOptions;
+  dockerConfig: any;
 
-  constructor(params: NodePaginateListReponseDto) {
+  /**
+   * this field is not available on this object
+   * 
+   */
+  @Exclude()
+  @ApiHideProperty()
+  sshConfig: any;
+
+  constructor(params: Omit<Node, 'dockerConfig' | 'sshConfig'>) {
     this.id = params.id
     this.name = params.name
   }
 }
 
 export class NodePaginateResponseDto extends PaginateDto {
+  /**
+   * List of Node
+   */
   @Type(type => NodePaginateListReponseDto)
   list: NodePaginateListReponseDto[];
 

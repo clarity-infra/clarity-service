@@ -1,10 +1,10 @@
 cff-version: 1.2.0
 message: 'If you use this software, please cite it as below.'
 authors:
-  - family-names: 'Clarity'
+  - family-names: 'Clareza'
   - family-names: 'Al-Basyir'
     given-names: 'Abdul Aziz'
-title: 'Clarity: open-source tools that can manage server made easy'
+title: 'Clareza: open-source tools that can manage server made easy'
 version: 0.0.1
 date-released: 2023-10-25
 url: 'claritate.work'

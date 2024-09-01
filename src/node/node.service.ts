@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Node } from './node.entity';
-import { Docker } from '@clarity/docker';
+import { Docker } from '@clareza/docker';
 
 @Injectable()
 export class NodeService {
@@ -10,7 +10,8 @@ export class NodeService {
         id: 1,
         name: "localhost",
         sshConfig: {
-          host: '127.0.0.1',
+          username: 'root',
+          host: 'localhost',
         },
         dockerConfig: {
           socketPath: "/var/run/docker.sock"
@@ -33,7 +34,8 @@ export class NodeService {
       id: 1,
       name: "localhost",
       sshConfig: {
-        host: '127.0.0.1',
+        username: 'root',
+        host: 'localhost',
       },
       dockerConfig: {
         socketPath: "/var/run/docker.sock"

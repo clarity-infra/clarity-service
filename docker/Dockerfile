@@ -22,4 +22,12 @@ FROM prerelease AS release
 ENTRYPOINT [ "bun", "dist/main.js" ]
 
 FROM base AS dev
+# For Dev 
+RUN apt-get update
+RUN apt-get install -yqq openssh-server daemonize dbus-user-session
+RUN mkdir /var/run/sshd
+RUN ssh-keygen -t rsa -b 4096 -N "" -f ~/.ssh/id_rsa
+RUN mkdir -p ~/.ssh && cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys
+
+# Normal NestCLI
 RUN bun install --global @nestjs/cli

@@ -1,13 +1,13 @@
 {
-  "name": "clarityops",
+  "name": "clareza",
   "private": true,
   "version": "1.0.0",
-  "description": "Nest TypeScript starter repository",
+  "description": "clareza is modern cloud management",
   "license": "MIT",
   "author": {
     "name": "Abdul Aziz Al-Basyir",
     "email": "abdulazizalbasyir119@gmail.com",
-    "url": "https://clarityops.albasyir.net"
+    "url": "https://clareza.albasyir.net"
   },
   "scripts": {
     "build": "nest build",
@@ -94,9 +94,9 @@
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
-      "^@clarity/docker(|/.*)$": "<rootDir>/libs/docker/src/$1",
-      "^@clarity/platform-manager(|/.*)$": "<rootDir>/libs/platform-manager/src/$1",
-      "^@clarity/database(|/.*)$": "<rootDir>/libs/database/src/$1"
+      "^@clareza/docker(|/.*)$": "<rootDir>/libs/docker/src/$1",
+      "^@clareza/platform-manager(|/.*)$": "<rootDir>/libs/platform-manager/src/$1",
+      "^@clareza/database(|/.*)$": "<rootDir>/libs/database/src/$1"
     }
   }
 }

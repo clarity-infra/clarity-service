@@ -1,4 +1,4 @@
-import { Docker } from "@clarity/docker";
+import { Docker } from "@clareza/docker";
 import { ConfigModule } from "@nestjs/config";
 
 export const dockerconfig = async (): Promise<Docker.DockerOptions> => {

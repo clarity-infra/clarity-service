@@ -1,0 +1,5 @@
+apt-get install -yqq openssh-server daemonize dbus-user-session
+mkdir /var/run/sshd
+ssh-keygen -t rsa -b 4096 -N "" -f ~/.ssh/id_rsa
+mkdir -p ~/.ssh && cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys
+/usr/sbin/sshd -D

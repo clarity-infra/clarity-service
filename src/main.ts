@@ -14,11 +14,6 @@ async function bootstrap() {
 
   await app.listen(3000);
 
-  app.useGlobalPipes(new ValidationPipe({
-    transform: true,
-    whitelist: true,
-  }));
-
   if (module.hot) {
     module.hot.accept();
     module.hot.dispose(() => app.close());

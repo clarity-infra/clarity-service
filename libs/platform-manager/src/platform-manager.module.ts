@@ -3,6 +3,7 @@ import { PlatformManagerService } from './platform-manager.service';
 import { INQUIRER } from '@nestjs/core';
 import { PM_TOKEN } from './platform-manager.token';
 import { PlatformManagerState } from './platform-manager.state';
+import { PlatformManagerMiddleware } from './platform-manager.middleware';
 
 @Module({
   providers: [
@@ -48,26 +49,7 @@ export class PlatformManagerModule implements NestModule {
     })
   }
 
-  constructor(
-    private pm: PlatformManagerService,
-
-    @Inject(PM_TOKEN.LOGGER)
-    private logger: Logger
-  ) { }
-
   configure(consumer: MiddlewareConsumer) {
-    // NOTE: only support express and fastify with a bit adjustment on it
-    //
-    //
-    consumer
-      .apply((req: any, res: any, next: any) => {
-        const store = new PlatformManagerState({
-          request: req,
-          response: res
-        });
-
-        return this.pm.initPlatformScope(store, () => next());
-      })
-      .forRoutes('*');
+    consumer.apply(PlatformManagerMiddleware).forRoutes('*');
   }
 }

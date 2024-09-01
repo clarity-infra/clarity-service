@@ -11,11 +11,11 @@
     "^.+\\.(t|j)s$": "ts-jest"
   },
   "moduleNameMapper": {
-    "@clarity/docker/(.*)": "<rootDir>/../libs/docker/src/$1",
-    "@clarity/docker": "<rootDir>/../libs/docker/src",
-    "@clarity/platform-manager/(.*)": "<rootDir>/../libs/platform-manager/src/$1",
-    "@clarity/platform-manager": "<rootDir>/../libs/platform-manager/src",
-    "@clarity/database/(.*)": "<rootDir>/../libs/database/src/$1",
-    "@clarity/database": "<rootDir>/../libs/database/src"
+    "@clareza/docker/(.*)": "<rootDir>/../libs/docker/src/$1",
+    "@clareza/docker": "<rootDir>/../libs/docker/src",
+    "@clareza/platform-manager/(.*)": "<rootDir>/../libs/platform-manager/src/$1",
+    "@clareza/platform-manager": "<rootDir>/../libs/platform-manager/src",
+    "@clareza/database/(.*)": "<rootDir>/../libs/database/src/$1",
+    "@clareza/database": "<rootDir>/../libs/database/src"
   }
 }

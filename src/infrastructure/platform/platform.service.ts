@@ -1,4 +1,4 @@
-import { PlatformManagerService } from '@clarity/platform-manager';
+import { PlatformManagerService } from '@clareza/platform-manager';
 import { Injectable } from '@nestjs/common';
 import { Request } from 'express';
 import { IncomingHttpHeaders } from 'http2';

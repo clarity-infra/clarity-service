@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PlatformManagerModule } from "@clarity/platform-manager"
+import { PlatformManagerModule } from "@clareza/platform-manager"
 import { PlatformService } from './platform.service';
 
 @Module({

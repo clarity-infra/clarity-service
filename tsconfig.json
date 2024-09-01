@@ -14,22 +14,22 @@
     "incremental": true,
     "skipLibCheck": true,
     "paths": {
-      "@clarity/docker": [
+      "@clareza/docker": [
         "libs/docker/src"
       ],
-      "@clarity/docker/*": [
+      "@clareza/docker/*": [
         "libs/docker/src/*"
       ],
-      "@clarity/platform-manager": [
+      "@clareza/platform-manager": [
         "libs/platform-manager/src"
       ],
-      "@clarity/platform-manager/*": [
+      "@clareza/platform-manager/*": [
         "libs/platform-manager/src/*"
       ],
-      "@clarity/database": [
+      "@clareza/database": [
         "libs/database/src"
       ],
-      "@clarity/database/*": [
+      "@clareza/database/*": [
         "libs/database/src/*"
       ]
     }

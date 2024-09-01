@@ -1,4 +1,4 @@
-import { ClassSerializerInterceptor, INestApplication, Module, OnModuleInit } from '@nestjs/common';
+import { ClassSerializerInterceptor, INestApplication, Module, OnModuleInit, ValidationPipe } from '@nestjs/common';
 import { ConfigModule } from './config/config.module';
 import { DockerModule } from './docker/docker.module';
 import { DatabaseModule } from './database/database.module';
@@ -39,6 +39,11 @@ export class InfrastructureModule implements OnModuleInit {
 
   onModuleInit() {
     const app = InfrastructureModule._NestApp;
+
+    app.useGlobalPipes(new ValidationPipe({
+      transform: true,
+      whitelist: true,
+    }));
 
     this.openApiService.setupFromApp(app)
 
