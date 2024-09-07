@@ -1,9 +1,13 @@
+# ===============================================
+# NOTE: this compose just for develop purposes
+# ===============================================
+
 version: '3'
 
 name: 'clareza-service'
 
 services:
-  core:
+  backend:
     build:
       context: .
       dockerfile: docker/Dockerfile
@@ -26,8 +30,6 @@ services:
       MYSQL_DATABASE: clareza
       MYSQL_USER: clareza
       MYSQL_PASSWORD: clareza
-    ports:
-      - '5506:3306'
     healthcheck:
       test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
       interval: 10s
@@ -35,7 +37,7 @@ services:
       retries: 3
 
   phpmyadmin:
-    image: phpmyadmin
+    image: phpmyadmin:fpm-alpine
     restart: always
     ports:
       - 5100:80

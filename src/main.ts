@@ -1,22 +1,22 @@
-import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
 import { InfrastructureModule } from './infrastructure/infrastructure.module';
+import { CommandFactory } from 'nest-commander';
 
 declare const module: any;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    cors: true,
-  });
+  const is_cli = process.argv[2] == "cli";
 
-  InfrastructureModule.NestApp = app;
+  if (is_cli) {
+    // inject to skip CLI flag
+    process.argv.splice(2, 1);
 
-  await app.listen(3000);
-
-  if (module.hot) {
-    module.hot.accept();
-    module.hot.dispose(() => app.close());
+    // run with CLI
+    await CommandFactory.run(AppModule);
+    process.exit()
+  } else {
+    // run with HTTP
+    await InfrastructureModule.CreateNestFactory(AppModule);
   }
 }
 

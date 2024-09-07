@@ -29,5 +29,5 @@ RUN mkdir /var/run/sshd
 RUN ssh-keygen -t rsa -b 4096 -N "" -f ~/.ssh/id_rsa
 RUN mkdir -p ~/.ssh && cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys
 
-# Normal NestCLI
+# Install nest CLI
 RUN bun install --global @nestjs/cli
