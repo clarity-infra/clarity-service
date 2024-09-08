@@ -1,25 +1,25 @@
 import { InternalServerErrorException, ValidationError } from "@nestjs/common";
 import { plainToInstance, Transform } from "class-transformer";
-import { IsDefined, IsNumber, IsString, validate, validateOrReject } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString, validate, validateOrReject } from "class-validator";
 
 export class MysqlDatabaseConfigDto {
-  @IsDefined()
+  @IsNotEmpty()
   @IsString()
   DB_HOST!: string;
 
-  @IsDefined()
+  @IsNotEmpty()
   @IsString()
   DB_USER!: string;
 
-  @IsDefined()
+  @IsNotEmpty()
   @IsString()
   DB_PASS!: string;
 
-  @IsDefined()
+  @IsNotEmpty()
   @IsString()
   DB_NAME!: string;
 
-  @IsDefined()
+  @IsNotEmpty()
   @IsNumber()
   @Transform((v) => {
     if (!v.value) return undefined;

@@ -25,12 +25,6 @@
       ],
       "@clareza/platform-manager/*": [
         "libs/platform-manager/src/*"
-      ],
-      "@clareza/database": [
-        "libs/database/src"
-      ],
-      "@clareza/database/*": [
-        "libs/database/src/*"
       ]
     }
   }

@@ -1,6 +1,6 @@
+import { Entity, PrimaryKey, Property, t } from "@mikro-orm/core";
 import { DockerOptions } from "dockerode";
 import { ConnectConfig } from "ssh2";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 
 /**
@@ -11,25 +11,25 @@ export class Node {
   /**
    * Generated ID
    */
-  @PrimaryGeneratedColumn()
+  @PrimaryKey({ autoincrement: true, type: t.string })
   id!: number;
 
   /**
    * Name of node
    */
-  @Column({ type: 'string', length: 50 })
+  @Property({ type: t.string, length: 50 })
   name!: string;
 
   /**
    * SSH connection config for connect to Node
    */
-  @Column({ type: "json" })
+  @Property({ type: t.json })
   sshConfig!: ConnectConfig
 
   /**
    * Docker connection config for connect docker on "this" node
    */
-  @Column({ type: 'json' })
+  @Property({ type: t.json })
   dockerConfig!: DockerOptions;
 
   constructor(initial: Omit<Node, 'id'>) {

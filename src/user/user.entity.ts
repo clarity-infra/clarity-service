@@ -1,14 +1,15 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, EntityRepositoryType, PrimaryKey, Property, t } from "@mikro-orm/core";
+import { UserRepository } from "./user.repository";
 
-@Entity()
+@Entity({ repository: () => UserRepository })
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryKey({ autoincrement: true })
   id!: number;
 
-  @Column({ type: 'string', length: 20 })
+  @Property({ type: t.string, length: 20 })
   identifier!: string;
 
-  @Column({ type: "string", length: 50 })
+  @Property({ type: t.string, length: 50 })
   password!: string;
 
   constructor(initial: Omit<User, 'id'>) {

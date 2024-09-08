@@ -14,8 +14,6 @@
     "@clareza/docker/(.*)": "<rootDir>/../libs/docker/src/$1",
     "@clareza/docker": "<rootDir>/../libs/docker/src",
     "@clareza/platform-manager/(.*)": "<rootDir>/../libs/platform-manager/src/$1",
-    "@clareza/platform-manager": "<rootDir>/../libs/platform-manager/src",
-    "@clareza/database/(.*)": "<rootDir>/../libs/database/src/$1",
-    "@clareza/database": "<rootDir>/../libs/database/src"
+    "@clareza/platform-manager": "<rootDir>/../libs/platform-manager/src"
   }
 }

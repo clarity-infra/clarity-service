@@ -1,10 +1,11 @@
 import { ConfigModule } from "@nestjs/config";
 import { ValidMysqlDatabaseConfig } from "./dto/mysql-database-config.dto";
-import { DataSourceOptions } from "typeorm";
-import { SnakeNamingStrategy } from "typeorm-naming-strategies";
+import { MikroOrmModuleOptions } from "@mikro-orm/nestjs";
+import { Connection, IDatabaseDriver } from "@mikro-orm/core";
+import { MySqlDriver } from "@mikro-orm/mysql";
 
 export type DatabaseConfig = {
-  datasource: DataSourceOptions
+  datasource: Omit<MikroOrmModuleOptions<IDatabaseDriver<Connection>>, 'contextName'>
 };
 
 export const databaseconfig = async (): Promise<DatabaseConfig> => {
@@ -18,12 +19,12 @@ export const databaseconfig = async (): Promise<DatabaseConfig> => {
 
     return {
       datasource: {
-        type: "mysql",
+        driver: MySqlDriver,
         host: config.DB_HOST,
-        username: config.DB_USER,
+        port: config.DB_PORT,
+        user: config.DB_USER,
         password: config.DB_PASS,
-        database: config.DB_NAME,
-        namingStrategy: new SnakeNamingStrategy()
+        dbName: config.DB_NAME
       }
     }
   }

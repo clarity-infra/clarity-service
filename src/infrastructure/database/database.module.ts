@@ -1,23 +1,26 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DatabaseConfig, databaseconfig } from './database.config';
-import { DataSource, DataSourceOptions } from 'typeorm';
+import { MikroOrmModule } from '@mikro-orm/nestjs';
+import { DatabaseService } from './database.service';
+import { DatabaseCommand } from './database.command';
+import { MigrationCommand } from './commands/migrations';
 
 @Module({
   imports: [
-    ConfigModule.forFeature(databaseconfig),
-  ],
-  providers: [
-    {
-      provide: DataSource,
+    MikroOrmModule.forRootAsync({
+      imports: [ConfigModule.forFeature(databaseconfig)],
       inject: [ConfigService],
-      async useFactory(config: ConfigService<DatabaseConfig>) {
-        const options: DataSourceOptions = config.getOrThrow("datasource");
-        const ds = new DataSource(options);
-
-        return await ds.initialize();
+      useFactory(configService: ConfigService<DatabaseConfig>) {
+        const config: DatabaseConfig['datasource'] = {
+          ...configService.getOrThrow('datasource'),
+          autoLoadEntities: true,
+        }
+        
+        return config
       },
-    }
-  ]
+    })
+  ],
+  providers: [DatabaseService, DatabaseCommand, MigrationCommand],
 })
 export class DatabaseModule {}
