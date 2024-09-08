@@ -1,8 +1,14 @@
 import { CommandRunner, SubCommand } from "nest-commander";
+import { DatabaseMigrationUpCommand } from "./up";
 
-@SubCommand({ name: 'migration', description: 'operate database to do migration'  })
-export class MigrationCommand extends CommandRunner {
-  async run(passedParams: string[], options?: Record<string, any>): Promise<void> {
-    console.log("migration");
+@SubCommand({
+  name: 'migration',
+  arguments: "<operation>",
+  description: 'migration operation',
+  subCommands: [DatabaseMigrationUpCommand]
+})
+export class DatabaseMigrationCommand extends CommandRunner {
+  async run(): Promise<void> {
+    /** not used */
   }
 }

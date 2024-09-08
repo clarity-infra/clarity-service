@@ -4,7 +4,8 @@ import { DatabaseConfig, databaseconfig } from './database.config';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { DatabaseService } from './database.service';
 import { DatabaseCommand } from './database.command';
-import { MigrationCommand } from './commands/migrations';
+import { DatabaseMigrationCommand } from './commands/migrations';
+import { DatabaseMigrationUpCommand } from './commands/migrations/up';
 
 @Module({
   imports: [
@@ -21,6 +22,13 @@ import { MigrationCommand } from './commands/migrations';
       },
     })
   ],
-  providers: [DatabaseService, DatabaseCommand, MigrationCommand],
+  providers: [
+    DatabaseService,
+    
+    // Database Commader
+    DatabaseCommand,
+    DatabaseMigrationCommand,
+    DatabaseMigrationUpCommand
+  ],
 })
 export class DatabaseModule {}
