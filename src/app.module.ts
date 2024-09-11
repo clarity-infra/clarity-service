@@ -4,6 +4,7 @@ import { NodeModule } from './node/node.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { VersionCommand } from './app.command';
+import { DockerModule } from '@clareza/docker';
 
 @Module({
   imports: [
@@ -11,6 +12,12 @@ import { VersionCommand } from './app.command';
     UserModule,
     AuthModule,
     NodeModule,
+    DockerModule.registerAsync({
+      useFactory() {
+        return {}
+      },
+      global: true
+    })
   ],
   providers: [VersionCommand]
 })

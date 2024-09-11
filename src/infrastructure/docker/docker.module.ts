@@ -6,7 +6,7 @@ import { ConfigService, ConfigModule } from '@nestjs/config';
 
 @Module({
     imports: [
-        DockerModuleLibrary.forRootAsync({
+        DockerModuleLibrary.registerAsync({
             imports: [
                 ConfigModule.forFeature(dockerconfig)
             ],

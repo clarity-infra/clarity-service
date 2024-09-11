@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@mikro-orm/core": "^6.3.8",
+    "@mikro-orm/migrations": "^6.3.8",
     "@mikro-orm/mysql": "^6.3.8",
     "@mikro-orm/nestjs": "^6.0.2",
     "@nestjs/common": "^10.3.2",
@@ -35,6 +36,8 @@
     "@nestjs/platform-express": "^10.3.2",
     "@nestjs/swagger": "^7.4.0",
     "@scalar/nestjs-api-reference": "^0.3.145",
+    "@tweedegolf/sab-adapter-amazon-s3": "^1.0.17",
+    "@tweedegolf/storage-abstraction": "^2.1.6",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "dockerode": "^4.0.2",
@@ -97,7 +100,9 @@
     ],
     "moduleNameMapper": {
       "^@clareza/docker(|/.*)$": "<rootDir>/libs/docker/src/$1",
-      "^@clareza/platform-manager(|/.*)$": "<rootDir>/libs/platform-manager/src/$1"
+      "^@clareza/platform-manager(|/.*)$": "<rootDir>/libs/platform-manager/src/$1",
+      "^clareza/storage(|/.*)$": "<rootDir>/libs/storage/src/$1",
+      "^clareza/logger(|/.*)$": "<rootDir>/libs/logger/src/$1"
     }
   }
 }

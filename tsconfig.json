@@ -25,6 +25,18 @@
       ],
       "@clareza/platform-manager/*": [
         "libs/platform-manager/src/*"
+      ],
+      "@clareza/storage": [
+        "libs/storage/src"
+      ],
+      "@clareza/storage/*": [
+        "libs/storage/src/*"
+      ],
+      "@clareza/logger": [
+        "libs/logger/src"
+      ],
+      "@clareza/logger/*": [
+        "libs/logger/src/*"
       ]
     }
   }

@@ -4,37 +4,10 @@ import { Docker } from './docker.driver';
 
 @Module({})
 export class DockerModule {
-  private static setupForRoot(module: ModuleMetadata): DynamicModule {
-    if(!module.providers) module.providers = [];
-    
-    module.providers.push({
-      provide: Docker,
-      inject:[DOCKER_TOKEN.CONFIG],
-      async useFactory(config: Docker.DockerOptions) {
-        const docker = new Docker(config);
-
-        await docker.version().catch((error: Error) => {
-          throw new InternalServerErrorException(error, "can't connect to docker target")
-        });
-
-        return docker;
-      },
-    })
-
-    module.exports = [
-      Docker
-    ] 
-
-    const setup: DynamicModule = Object.assign(module, {
-      module: DockerModule,
-      global: true,
-    })
-
-    return setup
-  }
-
-  static forRoot(options: Docker.DockerOptions): DynamicModule {
-    const setup = DockerModule.setupForRoot({
+  static register(
+    options: Docker.DockerOptions & Pick<DynamicModule, 'global'>,
+  ): DynamicModule {
+    const setup = DockerModule.registrationSetup({
       providers: [
         {
           provide: DOCKER_TOKEN.CONFIG,
@@ -46,12 +19,15 @@ export class DockerModule {
     return setup
   }
 
-  static forRootAsync(
-    options: Omit<FactoryProvider<Docker.DockerOptions>, 'provide'> & Pick<ModuleMetadata, 'imports'>
+  static registerAsync(
+    options: Pick<
+      FactoryProvider<Docker.DockerOptions>, 'useFactory'|'inject'> &
+      Pick<ModuleMetadata, 'imports'> &
+      Pick<DynamicModule, 'global'>
   ): DynamicModule {
     const { imports, ...provider } = options;
 
-    const setup = DockerModule.setupForRoot({
+    const setup = DockerModule.registrationSetup({
       imports,
       providers: [
         {
@@ -62,5 +38,34 @@ export class DockerModule {
     });
 
     return setup;
+  }
+
+  private static registrationSetup(
+    module: ModuleMetadata & Pick<DynamicModule, 'global'>
+  ): DynamicModule {
+    if (!module.providers) module.providers = [];
+
+    module.providers.push({
+      provide: Docker,
+      inject: [DOCKER_TOKEN.CONFIG],
+      async useFactory(config: Docker.DockerOptions) {
+        const docker = new Docker(config);
+
+        await docker.version().catch((error: Error) => {
+          throw new InternalServerErrorException(error, "can't connect to docker target")
+        });
+
+        return docker;
+      },
+    })
+
+    module.exports = [Docker]
+
+    const setup: DynamicModule = Object.assign(module, {
+      module: DockerModule,
+      global: true,
+    })
+
+    return setup
   }
 }

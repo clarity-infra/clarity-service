@@ -6,6 +6,7 @@ import { DatabaseService } from './database.service';
 import { DatabaseCommand } from './database.command';
 import { DatabaseMigrationCommand } from './commands/migrations';
 import { DatabaseMigrationUpCommand } from './commands/migrations/up';
+import { Migrator } from '@mikro-orm/migrations';
 
 @Module({
   imports: [
@@ -15,20 +16,27 @@ import { DatabaseMigrationUpCommand } from './commands/migrations/up';
       useFactory(configService: ConfigService<DatabaseConfig>) {
         const config: DatabaseConfig['datasource'] = {
           ...configService.getOrThrow('datasource'),
+          extensions: [Migrator],
           autoLoadEntities: true,
+          migrations: {
+            tableName: '_migration',
+            allOrNothing: true,
+          }
         }
         
         return config
       },
     })
   ],
+  exports: [DatabaseService],
   providers: [
-    DatabaseService,
-    
-    // Database Commader
+    // Commaders
     DatabaseCommand,
     DatabaseMigrationCommand,
-    DatabaseMigrationUpCommand
+    DatabaseMigrationUpCommand,
+
+    // Services
+    DatabaseService,
   ],
 })
 export class DatabaseModule {}

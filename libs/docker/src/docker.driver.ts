@@ -1,5 +1,5 @@
 import * as Dockerode from "dockerode";
 
 export {
-    Dockerode as Docker
+  Dockerode as Docker
 }
