@@ -2,8 +2,6 @@ import { AppModule } from './app.module';
 import { InfrastructureModule } from './infrastructure/infrastructure.module';
 import { CommandFactory } from 'nest-commander';
 
-declare const module: any;
-
 async function bootstrap() {
   const is_cli = process.argv[2] == "cli";
 

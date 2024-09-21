@@ -2,48 +2,53 @@
 # NOTE: this compose just for develop purposes
 # ===============================================
 
-version: '3'
-
-name: 'clareza-service'
+name: 'clareza-services'
 
 services:
-  backend:
+  # Central Node Service
+  central-node:
     build:
       context: .
-      dockerfile: docker/Dockerfile
+      dockerfile: docker/node-manager/Dockerfile
       target: dev
-    command: "/bin/sh -c '/usr/sbin/sshd && bun i && bun start:dev'"
+    command: "/bin/sh -c 'bun i && bun run start:dev'"
     ports:
-      - '3111:3000'
+      - '3200:3000'
     volumes:
       - .:/usr/src/app
       - /var/run/docker.sock:/var/run/docker.sock
     restart: always
 
+  # Docker in Docker service to testing and development
+  dind:
+    privileged: true
+    build:
+      context: docker/dind
+    restart: always
+
+  # Database for store data
   mysql:
     image: mysql:8.4
     restart: always
     volumes:
       - ./tmp/mysql_data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: clareza
-      MYSQL_DATABASE: clareza
-      MYSQL_USER: clareza
-      MYSQL_PASSWORD: clareza
+      MYSQL_ROOT_PASSWORD: clareza_cloud
     healthcheck:
       test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
       interval: 10s
       timeout: 5s
       retries: 3
 
+  # Database management tool for simply manage mysql
   phpmyadmin:
     image: phpmyadmin:fpm-alpine
     restart: always
     ports:
-      - 5100:80
+      - 3201:80
     environment:
-      - PMA_HOST=clareza-service-mysql-1
+      - PMA_HOST=mysql
       - PMA_PORT=3306
       - PMA_USER=root
-      - PMA_PASSWORD=clareza
+      - PMA_PASSWORD=clareza_cloud
       - PMA_ARBITRARY=1

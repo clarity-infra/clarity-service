@@ -63,7 +63,7 @@ export class DockerModule {
 
     const setup: DynamicModule = Object.assign(module, {
       module: DockerModule,
-      global: true,
+      global: module.global || false,
     })
 
     return setup

@@ -12,12 +12,6 @@ import { DockerModule } from '@clareza/docker';
     UserModule,
     AuthModule,
     NodeModule,
-    DockerModule.registerAsync({
-      useFactory() {
-        return {}
-      },
-      global: true
-    })
   ],
   providers: [VersionCommand]
 })

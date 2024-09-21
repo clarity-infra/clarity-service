@@ -20,32 +20,48 @@ declare const module: any;
     LoggerModule,
     OpenapiModule,
     SDKModule,
-  ],
-  providers: [
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: ClassSerializerInterceptor,
-    },
   ]
 })
 export class InfrastructureModule{
   public static async CreateNestFactory(m: Type, options?: NestApplicationOptions) {
     const app = await NestFactory.create(m, options);
 
+    /**
+     * Class Serializer Interceptor
+     * 
+     * to make sure DTO **response** always be convert to class and be transformed and validated
+     */
     app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
-    app.enableCors();
-
+    /**
+     * Class Validator Pipe
+     * 
+     * to make sure DTO **request** always be convert to class and be transformed and validated
+     */
     app.useGlobalPipes(new ValidationPipe({
       transform: true,
       whitelist: true,
     }));
 
+    /**
+     * Open Api Setup
+     * 
+     * Well Automated Documentation
+     */
     const openApiService = app.get(OpenapiService);
     openApiService.setupFromApp(app)
 
+    /**
+     * Serve App
+     * 
+     */
+    app.enableCors();
     await app.listen(3000);
 
+    /**
+     * Hot Reload Mechanism
+     * 
+     */
     if (module.hot) {
       module.hot.accept();
       module.hot.dispose(() => app.close());

@@ -9,9 +9,7 @@
       {
         "name": "@nestjs/swagger",
         "options": {
-          "dtoFileNameSuffix": [
-            ".dto.ts"
-          ],
+          "dtoFileNameSuffix": [".dto.ts"],
           "classValidatorShim": true,
           "introspectComments": true
         }
@@ -35,24 +33,6 @@
       "sourceRoot": "libs/platform-manager/src",
       "compilerOptions": {
         "tsConfigPath": "libs/platform-manager/tsconfig.lib.json"
-      }
-    },
-    "database": {
-      "type": "library",
-      "root": "libs/database",
-      "entryFile": "index",
-      "sourceRoot": "libs/database/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/database/tsconfig.lib.json"
-      }
-    },
-    "storage": {
-      "type": "library",
-      "root": "libs/storage",
-      "entryFile": "index",
-      "sourceRoot": "libs/storage/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/storage/tsconfig.lib.json"
       }
     },
     "logger": {
