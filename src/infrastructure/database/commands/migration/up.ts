@@ -11,7 +11,6 @@ export class DatabaseMigrationUpCommand extends CommandRunner {
   }
 
   async run(): Promise<void> {
-    this.databaseService.migrations.up();
-    console.log("migration up");
+    await this.databaseService.migration.up();
   }
 }

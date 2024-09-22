@@ -1,4 +1,3 @@
-import { DockerOptions } from "dockerode";
 import { Node } from "../node.entity";
 import { Exclude, Type } from "class-transformer";
 import { PaginateDto } from "src/common/dto/paginate.dto";
@@ -21,7 +20,7 @@ class NodePaginateListReponseDto implements Node {
    */
   @Exclude()
   @ApiHideProperty()
-  dockerConfig: any;
+  dockerConfig?: any;
 
   /**
    * this field is not available on this object
@@ -29,7 +28,7 @@ class NodePaginateListReponseDto implements Node {
    */
   @Exclude()
   @ApiHideProperty()
-  sshConfig: any;
+  sshConfig?: any;
 
   constructor(params: Omit<Node, 'dockerConfig' | 'sshConfig'>) {
     this.id = params.id

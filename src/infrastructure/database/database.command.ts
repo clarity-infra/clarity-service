@@ -1,5 +1,5 @@
 import { Command, CommandRunner } from "nest-commander";
-import { DatabaseMigrationCommand } from "./commands/migrations";
+import { DatabaseMigrationCommand } from "./commands/migration";
 
 @Command({
   name: 'database',
@@ -8,5 +8,7 @@ import { DatabaseMigrationCommand } from "./commands/migrations";
   subCommands: [DatabaseMigrationCommand]
 })
 export class DatabaseCommand extends CommandRunner {
-  async run(): Promise<void> { }
+  async run(): Promise<void> { 
+    return;
+  }
 }
