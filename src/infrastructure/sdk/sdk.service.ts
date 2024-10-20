@@ -1,79 +1,88 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import {
-  FileInfo,
-  GenerateApiOutput,
-  generateApi,
-} from 'swagger-typescript-api';
-import { SdkConfig } from './sdk.config';
+import { HttpException, Injectable } from '@nestjs/common';
 import { OpenapiService } from '../openapi/openapi.service';
+import { HttpService } from '@nestjs/axios';
+import { ClarezaLoggerService } from '@clareza/logger';
+import { lastValueFrom } from 'rxjs';
+import { SdkSupportedListReponseDto } from './dto/sdk-supported-list-reponse.dto';
+import { validateOrReject } from 'class-validator';
+import { SdkGeneratedLinkDto } from './dto/sdk-generated-link.dto';
+import { plainToInstance } from 'class-transformer';
+import { AxiosError, AxiosResponse } from 'axios';
 
 @Injectable()
 export class SDKService {
+
   constructor(
-    private configService: ConfigService<SdkConfig>,
+    private loggerService: ClarezaLoggerService,
     private openApiService: OpenapiService,
+    private httpService: HttpService
   ) { }
 
-  private _output?: GenerateApiOutput;
+  /**
+   * List of supported SDK
+   * 
+   */
+  async supportedList(): Promise<SdkSupportedListReponseDto> {
+    this.loggerService.setContext(this.supportedList.name);
+    this.loggerService.log("executing");
 
-  get fileName() {
-    const name = this.configService.getOrThrow('className');
+    this.loggerService.verbose("get from open api");
+    const response = await lastValueFrom(this.httpService.get('/clients'));
 
-    return name.toLowerCase().replaceAll(' ', '-');
-  }
-
-  get className() {
-    return this.configService.getOrThrow("className");
-  }
-
-  get file(): FileInfo | null {
-    if (!this._output) return null;
-
-    const file = this._output.files[0];
-
-    file.fileContent = file.fileContent.replace(
-      'export class Api<',
-      `export class ${this.className}<`,
-    );
-
-    return {
-      ...file,
-      fileContent: `/* eslint-disable */\n/* tslint:disable */\n\n${file.fileContent}`,
-    };
-  }
-
-  get fileOrThrow(): FileInfo {
-    const file = this.file;
-
-    if (!file) throw new InternalServerErrorException("expected file must be defined here");
-
-    return file;
-  }
-
-  async make(): Promise<FileInfo> {
-    if (this.file) return this.file;
-
-    // TODO: somehow this bug, it was working
-    const output = await generateApi({
-      name: this.fileName,
-      spec: this.openApiService.specOrThrow as any, // TODO: need to be fixed some type are missed
-      httpClientType: 'axios',
-      defaultResponseAsSuccess: true,
-      defaultResponseType: 'void',
-      generateResponses: true,
-
-      // TODO: extract is not good to go now, since when there's double Enum / Params it will be like "EnumStatus, E"
-      extractEnums: false,
-      extractResponseError: false,
-      extractRequestBody: false,
-      extractResponseBody: false,
-      extractRequestParams: false,
-      
+    this.loggerService.verbose("convert to DTO");
+    const responseDto = plainToInstance(SdkSupportedListReponseDto, {
+      list: response.data
     });
 
-    this._output = output;
+    this.loggerService.verbose("validate DTO");
+    await validateOrReject(responseDto)
 
-    return this.fileOrThrow;
+    this.loggerService.verbose("return a response");
+    return responseDto;
+  }
+
+  /**
+   * List of supported SDK
+   * 
+   */
+  async optionsList(target: string): Promise<any> {
+    this.loggerService.setContext(this.supportedList.name);
+    this.loggerService.log("executing");
+
+    this.loggerService.verbose("get from open api");
+    const response = await lastValueFrom(this.httpService.get(`/clients/${target}`));
+
+    this.loggerService.verbose("return a response");
+    return response.data;
+  }
+
+
+  /**
+   * Generate SDK
+   * 
+   */
+  async generate(target: string, options: any): Promise<SdkGeneratedLinkDto> {
+    this.loggerService.setContext(this.generate.name);
+    this.loggerService.log("execute");
+
+    this.loggerService.verbose("generate from open api");
+
+    const response: AxiosResponse<SdkGeneratedLinkDto> =
+      await lastValueFrom(this.httpService.post(`/clients/${target}`, {
+        spec: this.openApiService.spec,
+        options,
+      })).catch((error: AxiosError) => {
+        this.loggerService.error("fail to generate");
+        throw new HttpException(error.message, error.status || 500)
+      })
+
+    this.loggerService.verbose("convert to DTO");
+    const responseDto = plainToInstance(SdkGeneratedLinkDto, response.data);
+
+    this.loggerService.verbose("validate DTO");
+    await validateOrReject(responseDto)
+
+    this.loggerService.verbose("return a response");
+    return responseDto;
   }
 }

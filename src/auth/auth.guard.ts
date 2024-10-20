@@ -8,7 +8,7 @@ import { AuthService } from './auth.service';
 import { Reflector } from '@nestjs/core';
 import { IsPublic, Permission } from './auth.reflector';
 
-type PayloadType = Awaited<ReturnType<AuthService['getSafeJWTPayload']>>;
+type UserPayload = Awaited<ReturnType<AuthService['getSafeJWTPayload']>>;
 
 /**
  * Application guard
@@ -70,7 +70,7 @@ export class AuthenticationGuard implements CanActivate {
    * logic of how verify and get payload
    * 
    */
-  private async getSafePayload(jwt: string): Promise<PayloadType> {
+  private async getSafePayload(jwt: string): Promise<UserPayload> {
     return this.authService.getSafeJWTPayload(jwt).catch((error: Error) => {
       throw new UnauthorizedException(error.message);
     });
@@ -80,7 +80,7 @@ export class AuthenticationGuard implements CanActivate {
    * logic of how set user to session
    * 
    */
-  private async setUserSessionFromPayload(payload: PayloadType) {
+  private async setUserSessionFromPayload(payload: UserPayload) {
     await this.authService.setUserSession(payload)
   }
 

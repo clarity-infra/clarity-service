@@ -27,10 +27,10 @@
         "libs/platform-manager/src/*"
       ],
       "@clareza/logger": [
-        "libs/logger/src"
+        "libs/clareza-logger/src"
       ],
       "@clareza/logger/*": [
-        "libs/logger/src/*"
+        "libs/clareza-logger/src/*"
       ]
     }
   }

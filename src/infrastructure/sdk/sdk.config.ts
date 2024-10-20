@@ -4,7 +4,7 @@ export const sdkconfig = async () => {
   await ConfigModule.envVariablesLoaded;
 
   return {
-    className: process.env.SDK_CLASS_NAME
+    openApiUrl: "https://api.openapi-generator.tech/api/gen"
   }
 }
 
